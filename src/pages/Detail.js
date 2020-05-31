@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import { ButtonBack } from '../components/ButtonBack'
 import PropTypes from 'prop-types';
 const API_KEY = '5fc11a0b';
 
 export class Detail extends Component{
     static propTypes= {
-        id: PropTypes.string
+        match: PropTypes.shape({
+            params: PropTypes.object,
+            isExact: PropTypes.bool,
+            path: PropTypes.string,
+            url: PropTypes.string
+        })
     }
     state = { movie: {} }
     _goBack(){
@@ -19,8 +25,9 @@ export class Detail extends Component{
             })
     }
     componentDidMount(){
-        const { id } = this.props
-        this._fetchMovie({ id })
+        console.log(this.props);
+        const { movieId } = this.props.match.params
+        this._fetchMovie({ id: movieId })
     }
     render(){
         const { Title, Poster, Actors, Metascore, Plot } = this.state.movie 
@@ -56,7 +63,7 @@ export class Detail extends Component{
                             </nav>
                         </div>
                         <div className="media-right">
-                            <button className="button is-dark" onClick={this._goBack}>Go Back</button>
+                            <ButtonBack />
                         </div>
                     </article>
                 </div>
